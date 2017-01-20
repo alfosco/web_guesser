@@ -17,8 +17,23 @@ def check_guess(guess)
   end
 end
 
+def set_color(guess)
+  if guess.to_i - SECRET_NUMBER > 5
+    "#ff0000"
+  elsif SECRET_NUMBER - guess.to_i > 5
+    "#ff0000"
+  elsif guess.to_i > SECRET_NUMBER
+    "#ffcccc"
+  elsif guess.to_i < SECRET_NUMBER
+    "#ffcccc"
+  else
+    "#008000"
+  end
+end
+
 get '/' do
   guess = params["guess"]
   message = check_guess(guess)
-  erb :index, :locals => {:number => SECRET_NUMBER, :message => message}
+  color = set_color(guess)
+  erb :index, :locals => {:number => SECRET_NUMBER, :message => message, :color => color}
 end
